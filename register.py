@@ -42,6 +42,7 @@ def register():
     while not re.match("^01[0125][0-9]{8}$",phone): #must be only string with no spaces
         phone = input("Please enter valid phone number:\n")
     user["phone"] = phone
+    user["projects"]=[]
 
     fl = open("users.txt", 'a')
     fl.write(str(user))

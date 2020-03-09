@@ -1,30 +1,37 @@
 import os
 import re
 import datetime
+import fileinput
 
-def project_main_screen(email):
+def project_main_screen(user_dict):
     os.system("cls")
-    print(email)
+    print(user_dict)
     user_input = input("Please pick an option:\n1)Create a project  \n2)View Projects\n3)Exit\n")
     if user_input == "1" or user_input.lower() == "create":
         os.system("cls")
-        create_project(email)
+        create_project(user_dict)
     elif user_input == "2" or user_input.lower() == "view":
         os.system("cls")
         pass
         #view_all_projects()
+    elif user_input == "3" or user_input.lower() == "exit":
+        os.system("cls")
+        print("Thank you for using crowd funding")
+        exit()
+    else:
+        os.system("cls")
+        print("Wrong choice")
+        project_main_screen()
 
-def create_project(email):
+def create_project(user_dict):
     project = {}
-    fl = open("projects.txt", 'a')
-    projects_read = open("projects.txt", 'r')
+    user_projects = eval(user_dict)["projects"]
     project_title = ""
     while not re.match("^[A-Za-z ]+$",project_title): #must be valid email
         project_title = input("Enter the project title:\n")
-        projects_read.seek(0,0)
-        for project_dict in projects_read.read().splitlines():
-            if eval(project_dict)['title'] == email:
-                print(project_dict)
+        for pr in user_projects:
+            if pr['title'] == project_title:
+                print(pr)
                 print("project title exists")
                 project_title = ""
                 break
@@ -50,4 +57,18 @@ def create_project(email):
             break
     project['start_date'] = start_date
 
-    print(project)
+    l= eval(user_dict)["projects"][:]
+    l.append(project)
+    d= eval(user_dict)
+    d["projects"] = l[:]
+    print(d)
+    edit_project(d)
+    project_main_screen(str(d))
+
+def edit_project(user_dict):
+    for line in fileinput.FileInput("users.txt", inplace=True):
+        if eval(line)['email'] == user_dict['email']:
+            print(user_dict)
+        else:
+            print(line)
+    fileinput.close()            

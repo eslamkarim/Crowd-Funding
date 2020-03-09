@@ -22,7 +22,8 @@ def login():
         for user_dict in users_read.read().splitlines():
             if eval(user_dict)['password'] == password:
                 print("logged in")
-                project_main_screen(email)
+                users_read.close()
+                project_main_screen(user_dict)
                 break
         else:
             password = ""
