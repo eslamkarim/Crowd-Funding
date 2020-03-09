@@ -1,5 +1,6 @@
 import re
 import os
+import datetime
 
 def register():
     user = {}
@@ -45,8 +46,7 @@ def register():
     user["projects"]=[]
 
     fl = open("users.txt", 'a')
-    fl.write(str(user))
-    fl.write("\n")
+    fl.write(str(user)+'\n')
     fl.close()
     users_read.close
     os.system("cls")
