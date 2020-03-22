@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mkdir branch-master'
+                sh 'mkdir branch-jenkins2'
                 sh 'ls'
             }
         }
